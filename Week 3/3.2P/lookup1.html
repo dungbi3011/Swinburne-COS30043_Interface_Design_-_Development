@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>String Test</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Vue JS -->
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+
+  <body>
+    <div id = "lookup" class = "container">
+      <div class = "row"> <!-- start of 1st row -->
+        <h1>Lookup App: Unit Search Filter</h1>
+      </div> <!-- end of 1st row -->
+      <br>
+
+      <div class = "row"> <!-- start of 2nd row -->
+        <div class = "col-sm-3">
+          <p><label for = "code">Code:</label><br>
+          <input type = "text" id = "code" v-model = "obj.code">
+          </p>
+        </div>
+
+        <div class = "col-sm-3">
+          <p><label for = "desc">Description:</label><br>
+          <input type = "text" id = "desc" v-model = "obj.desc">
+          </p>
+        </div>
+
+        <div class = "col-sm-6">
+          <label>Unit Type:</label><br>
+          <input type = "radio" id = "core" v-model = "obj.type" value = "Core"><label for = "core">&ensp;Core</label><br>
+          <input type = "radio" id = "softdev" v-model = "obj.type" value = "Software Development"><label for = "softdev">&ensp;Software Development</label><br>
+          <input type = "radio" id = "sys" v-model = "obj.type" value = "Systems Analysis"><label for = "sys">&ensp;Systems Analysis</label><br>
+          <input type = "radio" id = "all" v-model = "obj.type" value = "" checked><label for = "all">&ensp;All</label><br>
+        </div>
+
+      </div> <!-- end of 2nd row -->
+      <br><br>
+
+      <div class = "row"> <!-- start of 3rd row -->
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+              <tr>
+                <th>Code</th>
+                <th>Description</th>
+                <th>Credit Points</th>
+                <th>Type</th>
+              </tr>
+
+              <tr v-for = "s in findSubject"> <!-- results displayed -->
+                <td>{{s.code}}</td>
+                <td>{{s.desc}}</td>
+                <td>{{s.cp}}</td>
+                <td>{{s.type}}</td>
+              </tr>
+          </table>
+        </div>
+      </div> <!-- end of 3rd row -->
+    </div>
+
+    <script>
+      //creating displayed data for table, and lookup functions called findSubject
+      Vue.createApp ({
+        data() {
+          return {
+            obj: {code: "", desc: "", cp: "", type: ""},
+            subjects: [ 
+            {code:'ICT10001', desc:'Problem Solving with ICT', cp:12.5, type:'Core'},
+            {code:'COS10005', desc:'Web Development', cp:12.5, type:'Core'},
+            {code:'INF10003', desc:'Introduction to Business Information Systems', cp:12.5, type:'Core'},
+            {code:'INF10002', desc:'Database Analysis and Design', cp:12.5, type:'Core'},
+            {code:'COS10009', desc:'Introduction to Programming', cp:12.5, type:'Core'},
+            {code:'INF30029', desc:'Information Technology Project Management', cp:12.5, type:'Core'},
+            {code:'ICT30005', desc:'Professional Issues in Information Technology', cp:12.5, type:'Core'},
+            {code:'ICT30001', desc:'Information Technology Project', cp:12.5, type:'Core'},
+            {code:'COS20001', desc:'User-Centred Design', cp:12.5, type:'Software Development'},
+            {code:'TNE10005', desc:'Network Administration', cp:12.5, type:'Software Development'},
+            {code:'COS20016', desc:'Operating System Configuration', cp:12.5, type:'Software Development'},
+            {code:'SWE20001', desc:'Development Project 1 - Tools and Practices', cp:12.5, type:'Software Development'},
+            {code:'COS20007', desc:'Object Oriented Programming', cp:12.5, type:'Software Development'},
+            {code:'COS30015', desc:'IT Security', cp:12.5, type:'Software Development'},
+            {code:'COS30043', desc:'Interface Design and Development', cp:12.5, type:'Software Development'},
+            {code:'COS30017', desc:'Software Development for Mobile Devices', cp:12.5, type:'Software Development'},
+            {code:'INF20012', desc:'Enterprise Systems', cp:12.5, type:'Systems Analysis'},
+            {code:'ACC10007', desc:'Financial Information for Decision Making', cp:12.5, type:'Systems Analysis'},
+            {code:'INF20003', desc:'Requirements Analysis and Modelling', cp:12.5, type:'Systems Analysis'},
+            {code:'ACC20014', desc:'Management Decision Making', cp:12.5, type:'Systems Analysis'},
+            {code:'INF30005', desc:'Business Process Management', cp:12.5, type:'Systems Analysis'},
+            {code:'INF30003', desc:'Business Information Systems Analysis', cp:12.5, type:'Systems Analysis'},
+            {code:'INF30020', desc:'Information Systems Risk and Security', cp:12.5, type:'Systems Analysis'},
+            {code:'INF30001', desc:'Systems Acquisition & Implementation Management', cp:12.5, type:'Systems Analysis'},
+            ]
+          };
+        },
+
+        computed: { //implementing findSubject function
+          findSubject: function() {
+            return this.subjects.filter(s=>
+              s.code.toLowerCase().match(this.obj.code.toLowerCase()) &&
+              s.desc.toLowerCase().match(this.obj.desc.toLowerCase()) &&
+              s.type.toLowerCase().match(this.obj.type.toLowerCase()) 
+              );
+          }
+        }
+        
+      }).mount("#lookup");
+    </script>
+
+  </body>
+</html>
